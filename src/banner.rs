@@ -1,0 +1,47 @@
+use colored::Colorize;
+
+pub const BANNER: &str = r#"
+    ██████╗  █████╗  ██████╗ ███╗   ██╗ █████╗ ██████╗  ██████╗ ██╗  ██╗
+    ██╔══██╗██╔══██╗██╔════╝ ████╗  ██║██╔══██╗██╔══██╗██╔═══██╗██║ ██╔╝
+    ██████╔╝███████║██║  ███╗██╔██╗ ██║███████║██████╔╝██║   ██║█████╔╝
+    ██╔══██╗██╔══██║██║   ██║██║╚██╗██║██╔══██║██╔══██╗██║   ██║██╔═██╗
+    ██║  ██║██║  ██║╚██████╔╝██║ ╚████║██║  ██║██║  ██║╚██████╔╝██║  ██╗
+    ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝
+          ⚔  Web Fuzzer v0.3 — Born in Asgard, Forged in Battle  ⚔
+"#;
+
+pub fn print_banner() {
+    println!("{}", BANNER.bright_yellow());
+}
+
+pub fn status_color(code: u16) -> colored::ColoredString {
+    match code {
+        200         => format!("{}", code).green().bold(),
+        204         => format!("{}", code).bright_green().bold(),
+        301|302|307 => format!("{}", code).yellow().bold(),
+        401         => format!("{}", code).bright_red().bold(),
+        403         => format!("{}", code).red().bold(),
+        405         => format!("{}", code).magenta().bold(),
+        _           => format!("{}", code).white(),
+    }
+}
+
+pub fn status_label(code: u16) -> &'static str {
+    match code {
+        200         => "⚔  SLAIN",
+        204         => "🛡  SHIELD",
+        301|302|307 => "🌊 VOYAGE",
+        401         => "🔒 RUNE LOCK",
+        403         => "🪓 FORBIDDEN",
+        405         => "⛩  SEALED",
+        _           => "❓ UNKNOWN",
+    }
+}
+
+pub fn depth_prefix(depth: usize) -> String {
+    if depth == 0 {
+        "🌍 [ROOT]".to_string()
+    } else {
+        format!("{}🌿 [DEPTH {}]", "  ".repeat(depth), depth)
+    }
+}
